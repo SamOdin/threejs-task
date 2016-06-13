@@ -47,16 +47,20 @@
 
             //lights for scene
 
-            var light = new THREE.DirectionalLight(0xffffff);
-            light.position.set(1, 1, 1);
-            scene.add(light);
-
-            light = new THREE.DirectionalLight(0x002288);
-            light.position.set(-1, -1, -1);
-            scene.add(light);
-
-            light = new THREE.AmbientLight(0x222222);
-            scene.add(light);
+            scene.add( new THREE.AmbientLight( 0x666666 ) );
+            var light = new THREE.DirectionalLight( 0xdfebff, 1.75 );
+            light.position.set( 50, 200, 100 );
+            light.position.multiplyScalar( 1.3 );
+            light.castShadow = true;
+            light.shadow.mapSize.width = 1024;
+            light.shadow.mapSize.height = 1024;
+            var d = 300;
+            light.shadow.camera.left = - d;
+            light.shadow.camera.right = d;
+            light.shadow.camera.top = d;
+            light.shadow.camera.bottom = - d;
+            light.shadow.camera.far = 1000;
+            scene.add( light );
 
             function onWindowResize() {
                 camera.aspect = window.innerWidth / window.innerHeight;
@@ -73,7 +77,7 @@
             render();
 
             //object geometry
-            var material = new THREE.MeshLambertMaterial({ color: 0xFFCCCC, shading: THREE.FlatShading });
+            var material = new THREE.MeshLambertMaterial({ color: 0xCC99FF, shading: THREE.FlatShading });
             var geometryBox = new THREE.BoxGeometry( 1, 1, 1 );
             var geometrySphere = new THREE.SphereBufferGeometry( 0.1, 32, 16 );
             var geometryPyramid = new THREE.CylinderGeometry(0, 1.5, 1.5, 4, false);
