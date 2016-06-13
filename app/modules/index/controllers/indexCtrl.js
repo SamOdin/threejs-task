@@ -22,16 +22,18 @@
             var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
             camera.position.z = 10;
 
-            //controls
-            var controls = new THREE.OrbitControls(camera);
-            controls.addEventListener('change', render);
-
             //render
             var renderer = new THREE.WebGLRenderer({antialias: false});
             renderer.setClearColor(scene.fog.color, 1);
             renderer.setSize( window.innerWidth, window.innerHeight );
             document.body.appendChild( renderer.domElement );
             window.addEventListener('resize', onWindowResize, false);
+
+            //controls
+            var controls = new THREE.OrbitControls( camera, renderer.domElement );
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.25;
+            controls.enableZoom = false;
 
             //lights for scene
 
@@ -55,48 +57,62 @@
 
             function render() {
                 requestAnimationFrame( render );
-
+                controls.update();
                 renderer.render( scene, camera );
             }
             render();
 
             //object geometry
-
-            //CUBE
+            var material = new THREE.MeshLambertMaterial({ color: 0xFFCCCC, shading: THREE.FlatShading });
             var geometryBox = new THREE.BoxGeometry( 1, 1, 1 );
-            var materialBox = new THREE.MeshLambertMaterial({ color: 0xFFCCCC, shading: THREE.FlatShading });
-            var cube = new THREE.Mesh(geometryBox, materialBox);
-            cube.position.x = Math.random() * 8 - 4;
-            cube.position.y = Math.random() * 8 - 4;
-            cube.position.z = Math.random() * 8 - 4;
-            scene.add(cube);
-
-            //Sphere
             var geometrySphere = new THREE.SphereBufferGeometry( 0.1, 32, 16 );
-            var materialSphere = new THREE.MeshLambertMaterial({ color: 0xFFCCCC, shading: THREE.FlatShading});
-            var sphere = new THREE.Mesh(geometrySphere, materialSphere);
-            sphere.position.x = Math.random() * 8 - 4;
-            sphere.position.y = Math.random() * 8 - 4;
-            sphere.position.z = Math.random() * 8 - 4;
-            scene.add(sphere);
-
-            //Pyramid
             var geometryPyramid = new THREE.CylinderGeometry(0, 1.5, 1.5, 4, false);
-            var materialPyramid = new THREE.MeshLambertMaterial({ color: 0xFFCCCC, shading: THREE.FlatShading});
-            var pyramid = new THREE.Mesh(geometryPyramid, materialPyramid);
-            pyramid.position.x = Math.random() * 8 - 4;
-            pyramid.position.y = Math.random() * 8 - 4;
-            pyramid.position.z = Math.random() * 8 - 4;
-            scene.add(pyramid);
 
+            $scope.createObj = function (geometry, scale) {
+
+                if(!isNaN(parseFloat(scale)) && isFinite(scale)) {
+
+                    if(geometry == 'cube') {
+
+                        var cube = new THREE.Mesh(geometryBox, material);
+                        cube.position.x = Math.random() * 8 - 4;
+                        cube.position.y = Math.random() * 8 - 4;
+                        cube.position.z = Math.random() * 8 - 4;
+                        cube.scale.set(scale, scale, scale);
+                        scene.add(cube);
+
+                    } else if(geometry == 'pyramid') {
+
+                        var pyramid = new THREE.Mesh(geometryPyramid, material);
+                        pyramid.position.x = Math.random() * 8 - 4;
+                        pyramid.position.y = Math.random() * 8 - 4;
+                        pyramid.position.z = Math.random() * 8 - 4;
+                        pyramid.scale.set(scale, scale, scale);
+                        scene.add(pyramid);
+
+                    } else if(geometry == 'sphere') {
+
+                        var sphere = new THREE.Mesh(geometrySphere, material);
+                        sphere.position.x = Math.random() * 8 - 4;
+                        sphere.position.y = Math.random() * 8 - 4;
+                        sphere.position.z = Math.random() * 8 - 4;
+                        sphere.scale.set(scale, scale, scale);
+                        scene.add(sphere);
+
+                    }
+                } else {
+                    console.log('Scale not a number!');
+                }
+            };
+
+            console.log(scene.children);
             $scope.mainScene = scene.children;
 
-            console.log(scene.uuid);
-            console.log(scene.id);
-            console.log(scene.children);
-            console.log(scene.children[3].uuid);
-            console.log(scene.children[4].uuid);
-            console.log(scene.children[5].uuid);
+            $scope.deleteObj = function (obj) {
+                var index = scene.children.indexOf(obj);
+                scene.children.splice(index, 1);
+            }
+            
         }
     
 })();

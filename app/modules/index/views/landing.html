@@ -1,2 +1,22 @@
-<div id="container"></div>
+<div class="dropdown">
+    <select data-ng-model="geometry">
+        <option>cube</option>
+        <option>pyramid</option>
+        <option>sphere</option>
+    </select>
+    <input type="text" placeholder="Type scale here.." data-ng-model="scale" />
+    <button data-ng-show="scale" data-ng-click="createObj(geometry, scale)">Create</button>
+</div>
+<div id="objectsList">
+    <h3>List of objects</h3>
+    <div data-ng-repeat="obj in mainScene | filter:{type:'Mesh'}">
+        <div>
+            <h5>[[obj.uuid | limitTo : 23]]
+                <span data-ng-click="deleteObj(obj)" class="label label-info">
+                    &times;
+                </span>
+            </h5>
+        </div>
+    </div>
+</div>
 

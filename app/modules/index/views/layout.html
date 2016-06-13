@@ -1,14 +1,1 @@
-<div class="dropdown">
-    <select data-ng-model="geometry">
-        <option>cube</option>
-        <option>pyramid</option>
-        <option>sphere</option>
-    </select>
-    <input type="text" placeholder="Type scale here.." data-ng-model="scale" />
-    <button>Create</button>
-</div>
-<div id="objectsList">
-    <h3>TEST</h3>
-    <div data-ng-repeat="obj in mainScene" class="btn btn-block btn-default btn-lg">[[obj.uuid]]</div>
-</div>
 <three-constructor></three-constructor>
