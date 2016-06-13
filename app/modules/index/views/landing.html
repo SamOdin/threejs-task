@@ -29,9 +29,9 @@
         <option>sphere</option>
     </select>
     <input type="text" placeholder="Type scale here.." data-ng-model="scale" />
-    <button data-ng-show="scale" data-ng-click="createObj(geometry, scale)">Create</button>
+    <button data-ng-show="geometry && scale" data-ng-click="createObj(geometry, scale)">Create</button>
 </div>
-<div id="objectsList">
+<div id="objectsList" data-ng-show="mainScene.length > 2">
     <h3>List of objects</h3>
     <div data-ng-repeat="obj in mainScene | filter:{type:'Mesh'}">
         <div>
