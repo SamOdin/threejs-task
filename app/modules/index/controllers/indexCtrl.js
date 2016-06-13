@@ -79,7 +79,7 @@
             //object geometry
             var material = new THREE.MeshLambertMaterial({ color: 0xCC99FF, shading: THREE.FlatShading });
             var geometryBox = new THREE.BoxGeometry( 1, 1, 1 );
-            var geometrySphere = new THREE.SphereBufferGeometry( 0.1, 32, 16 );
+            var geometrySphere = new THREE.SphereGeometry(2, 50, 50, 0, Math.PI * 2, 0, Math.PI * 2);
             var geometryPyramid = new THREE.CylinderGeometry(0, 1.5, 1.5, 4, false);
 
             $scope.createObj = function (geometry, scale) {
@@ -113,6 +113,8 @@
                         sphere.scale.set(scale, scale, scale);
                         scene.add(sphere);
 
+                    } else {
+                        console.log('Choose right object');
                     }
                 } else {
                     console.log('Scale not a number!');
