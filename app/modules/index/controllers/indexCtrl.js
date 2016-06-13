@@ -2,7 +2,7 @@
     
     angular
         .module('indexCtrl', [])
-        .controller('indexCtrl', [ indexCtrl])
+        .controller('indexCtrl', ['$scope', indexCtrl])
         .directive('threeConstructor', threeConstructor);
 
         function threeConstructor() {
@@ -12,7 +12,7 @@
             }
         }
     
-        function indexCtrl() {
+        function indexCtrl($scope) {
 
             //scene
             var scene = new THREE.Scene();
@@ -89,7 +89,14 @@
             pyramid.position.z = Math.random() * 8 - 4;
             scene.add(pyramid);
 
+            $scope.mainScene = scene.children;
 
+            console.log(scene.uuid);
+            console.log(scene.id);
+            console.log(scene.children);
+            console.log(scene.children[3].uuid);
+            console.log(scene.children[4].uuid);
+            console.log(scene.children[5].uuid);
         }
     
 })();
