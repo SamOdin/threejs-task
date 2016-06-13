@@ -14,6 +14,16 @@
     
         function indexCtrl($scope) {
 
+            $scope.threeConst = false;
+            $scope.formCont = true;
+            
+            $scope.singIn = function (login, password) {
+                if(login == 'admin' && password == 'superpass') {
+                    $scope.threeConst = true;
+                    $scope.formCont = false
+                }
+            };
+
             //scene
             var scene = new THREE.Scene();
             scene.fog = new THREE.FogExp2(0xcccccc, 0.002);
